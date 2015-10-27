@@ -15,12 +15,12 @@ public class Horse
     }
 
     public void move() {
-        this.speed *= Math.random();
-        this.distance += this.speed;
+        distance += getSpeed() * Math.random();
     }
     public void print() {
-        for (int i = 0; i < distance; i++)
+        for (int i = 0; i < Math.round(distance); i++) {
             System.out.print(".");
+        }
         System.out.print(name);
         System.out.println();
     }
