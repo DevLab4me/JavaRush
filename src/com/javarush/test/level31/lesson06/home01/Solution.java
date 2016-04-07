@@ -1,9 +1,6 @@
 package com.javarush.test.level31.lesson06.home01;
 
-import java.io.ByteArrayOutputStream;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashMap;
@@ -38,12 +35,12 @@ b.txt
 */
 public class Solution {
     public static void main(String[] args) throws IOException {
-        String pathToFile = args[0];
-        String pathToZip = args[1];
+        String filePath = "D:\\result.txt";
+        String zipPath = "D:\\zip.rar";
 
-        HashMap<String, byte[]> zipContent = new HashMap<>();
+        HashMap<ZipEntry, byte[]> zipContent = new HashMap<>();
 
-        try(ZipInputStream zis = new ZipInputStream(new FileInputStream(pathToZip))) {
+        try(ZipInputStream zis = new ZipInputStream(new FileInputStream(zipPath))) {
             ZipEntry zipEntry;
             while ((zipEntry = zis.getNextEntry()) != null) {
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -52,22 +49,40 @@ public class Solution {
                 while ((count = zis.read(buffer)) != -1) {
                     baos.write(buffer, 0, count);
                 }
-                String filename = zipEntry.getName();
-                byte[] bytes = baos.toByteArray();
-                zipContent.put(filename, bytes);
+                zipContent.put(zipEntry, baos.toByteArray());
             }
         }
 
-        String fileName = Paths.get(pathToFile).getFileName().toString();
-        try(ZipOutputStream zip = new ZipOutputStream(new FileOutputStream(pathToFile))) {
-            for (Map.Entry<String, byte[]> fileEntry : zipContent.entrySet()) {
-                if (!fileEntry.getKey().equals(fileName)) {
-                    zip.putNextEntry(new ZipEntry(fileEntry.getKey()));
-                    zip.write(fileEntry.getValue());
+        String fileName = new File(filePath).getName();
+        boolean fileAdded = false;
+        try(ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(zipPath))) {
+            for (Map.Entry<ZipEntry, byte[]> entry : zipContent.entrySet()) {
+                if (fileName.equals(entry.getKey().getName())) {
+                    addZipEntry(filePath, zipPath, fileName);
+                    fileAdded = true;
+                    continue;
                 }
-                zip.putNextEntry(new ZipEntry("new/" + Paths.get(fileName).getFileName()));
-                Files.copy(Paths.get(pathToFile), zip);
+                zos.putNextEntry(entry.getKey());
+                zos.write(entry.getValue());
+                zos.closeEntry();
             }
         }
+
+        if(!fileAdded){
+            addZipEntry(filePath, zipPath, "new/"+fileName);
+        }
+    }
+
+    public static void addZipEntry(String filePath, String zipPath, String fileName){
+        try(FileInputStream fis = new FileInputStream(filePath);
+            ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(zipPath))){
+            byte[] fileBytes = new byte[fis.available()];
+            fis.read(fileBytes);
+
+            ZipEntry zipEntry = new ZipEntry(fileName);
+            zos.putNextEntry(zipEntry);
+            zos.write(fileBytes);
+            zos.closeEntry();
+        } catch (IOException ignored){}
     }
 }
