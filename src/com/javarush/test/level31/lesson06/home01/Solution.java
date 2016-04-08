@@ -58,7 +58,6 @@ public class Solution {
         try(ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(zipPath))) {
             for (Map.Entry<ZipEntry, byte[]> entry : zipContent.entrySet()) {
                 if (fileName.equals(entry.getKey().getName())) {
-                    addZipEntry(filePath, zipPath, fileName);
                     fileAdded = true;
                     continue;
                 }
@@ -70,7 +69,9 @@ public class Solution {
 
         if(!fileAdded){
             addZipEntry(filePath, zipPath, "new/"+fileName);
-        }
+        } else{
+			addZipEntry(filePath, zipPath, fileName);
+		}
     }
 
     public static void addZipEntry(String filePath, String zipPath, String fileName){
