@@ -1,5 +1,7 @@
 package com.javarush.test.level31.lesson10.home01;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.Properties;
 
 /* Читаем конфиги
@@ -24,6 +26,15 @@ public class Solution {
     }
 
     public Properties getProperties(String fileName) {
-        return null;
+        Properties properties = new Properties();
+        try (FileInputStream fin = new FileInputStream(fileName)){
+            if(fileName.endsWith(".xml")){
+                properties.loadFromXML(fin);
+            }else{
+                properties.load(fin);
+            }
+        }catch (IOException ignored){}
+
+        return properties;
     }
 }
