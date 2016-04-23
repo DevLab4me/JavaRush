@@ -11,13 +11,13 @@ public class UnCryptor {
 
     public void execute() {
         System.out.println("password.request");
-        String prevPass = "gfhjkmartemio25";
-        String correctPass = unCrypt(toBytes(prevPass));
+        String previousPass = "gfhjkmartemio25";
+        String correctPass = unCrypt(toBytes(previousPass));
         System.out.println(correctPass);
     }
     private byte [] toBytes(String prevPass)
     {
-        char [] charArray = prevPass.toCharArray();
+        char [] charArray = previousPass.toCharArray();
         byte [] byteArray = new byte[prevPass.length()];
         for (int i = 0; i < charArray.length; i++)
         {
