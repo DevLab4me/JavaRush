@@ -1,5 +1,9 @@
 package com.javarush.test.level32.lesson02.task01;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.io.RandomAccessFile;
+
 /* Запись в файл
 В метод main приходят три параметра:
 1) fileName - путь к файлу
@@ -8,7 +12,14 @@ package com.javarush.test.level32.lesson02.task01;
 Записать text в файл fileName начиная с позиции number.
 Если файл слишком короткий, то записать в конец файла.
 */
+
 public class Solution {
     public static void main(String... args) {
+        Path fileName = Paths.get(args[0]);
+        int number = args[1];
+        String text = args[2];
+
+        try(RandomAccessFile randomAccessFile = new RandomAccessFile(fileName, "rw")){
+           }
     }
 }
