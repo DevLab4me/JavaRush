@@ -16,10 +16,12 @@ import java.io.RandomAccessFile;
 public class Solution {
     public static void main(String... args) {
         Path fileName = Paths.get(args[0]);
-        int number = args[1];
+        long number = args[1];
         String text = args[2];
 
         try(RandomAccessFile randomAccessFile = new RandomAccessFile(fileName, "rw")){
+           randomAccessFile.seek(number);
+           randomAccessFile.writeBytes(text);
            }
     }
 }
