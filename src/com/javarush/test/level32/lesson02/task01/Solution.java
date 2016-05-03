@@ -1,7 +1,6 @@
 package com.javarush.test.level32.lesson02.task01;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.IOException;
 import java.io.RandomAccessFile;
 
 /* Запись в файл
