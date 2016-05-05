@@ -7,26 +7,23 @@ import com.javarush.test.level31.lesson15.big01.exception.PathIsNotFoundExceptio
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-/**
- * Created by Artem on 17.04.2016.
- */
-
-public class ZipAddCommand extends ZipCommand{
+public class ZipAddCommand extends ZipCommand {
     @Override
     public void execute() throws Exception {
         try {
-            ConsoleHelper.writeMessage("Добавление нового файла в архив.");
+            ConsoleHelper.writeMessage("Р”РѕР±Р°РІР»РµРЅРёРµ РЅРѕРІРѕРіРѕ С„Р°Р№Р»Р° РІ Р°СЂС…РёРІ.");
 
             ZipFileManager zipFileManager = getZipFileManager();
 
-            ConsoleHelper.writeMessage("Введите полное имя файла для добавления:");
-            Path destinationPath = Paths.get(ConsoleHelper.readString());
-            zipFileManager.addFile(destinationPath);
+            ConsoleHelper.writeMessage("Р’РІРµРґРёС‚Рµ РїРѕР»РЅРѕРµ РёРјСЏ С„Р°Р№Р»Р° РґР»СЏ РґРѕР±Р°РІР»РµРЅРёСЏ:");
+            Path sourcePath = Paths.get(ConsoleHelper.readString());
 
-            ConsoleHelper.writeMessage("Добавление в архив завершено.");
+            zipFileManager.addFile(sourcePath);
+
+            ConsoleHelper.writeMessage("Р”РѕР±Р°РІР»РµРЅРёРµ РІ Р°СЂС…РёРІ Р·Р°РІРµСЂС€РµРЅРѕ.");
 
         } catch (PathIsNotFoundException e) {
-            ConsoleHelper.writeMessage("Файл не был найден.");
+            ConsoleHelper.writeMessage("Р¤Р°Р№Р» РЅРµ Р±С‹Р» РЅР°Р№РґРµРЅ.");
         }
     }
 }
