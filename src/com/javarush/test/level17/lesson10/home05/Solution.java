@@ -24,7 +24,6 @@ public class Solution {
     }
 
     public synchronized Solution appendThis(Solution s) {
-        //do something here....
         return this;
     }
 
