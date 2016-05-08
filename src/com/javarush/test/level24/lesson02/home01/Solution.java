@@ -9,8 +9,8 @@ package com.javarush.test.level24.lesson02.home01;
 */
 public class Solution {
     public static void main(String[] args) throws UnsupportedInterfaceMarkerException {
-        SelfInterfaceMarkerImpl obj = new SelfInterfaceMarkerImpl();
-        Util.testClass(obj);
+        SelfInterfaceMarkerImpl object = new SelfInterfaceMarkerImpl();
+        Util.testClass(object);
     }
 
 }
