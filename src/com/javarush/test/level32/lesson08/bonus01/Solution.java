@@ -24,11 +24,11 @@ public class Solution {
         test(solution.getProxy(Big.class));                         //true true false т.к. Big наследуется от Item
     }
 
-    public Item getProxy(Object ... obj){
-        for(Object object : obj){
-            test(object);
-            return (object)Proxy.newProxyInstance(new ItemInvocationHandler());
-        }
+    public <T extends Item> T getProxy(Class<T> tClass, Class<?> ... interfaces){
+        Class[] classes = new Class[interfaces.length+1];
+        System.arraycopy(interfaces, 0, classes, 0, interfaces.length);
+        classes[classes.length-1] = tClass;
+        return (T)Proxy.newProxyInstance(tClass.getClassLoader(), classes, new ItemInvocationHandler());
     }
 
     private static void test(Object proxy) {
