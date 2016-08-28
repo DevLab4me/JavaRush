@@ -24,6 +24,7 @@ public class SuperscriptAction extends StyledEditorKit.StyledTextAction {
             MutableAttributeSet attributeSet = getStyledEditorKit(editorPane).getInputAttributes();
             SimpleAttributeSet set = new SimpleAttributeSet();
             StyleConstants.setSuperscript(set, !StyleConstants.isSuperscript(attributeSet));
+            setCharacterAttributes(editorPane, set, false);
         }
     }
 }

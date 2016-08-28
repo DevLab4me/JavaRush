@@ -5,6 +5,7 @@ import com.javarush.test.level32.lesson15.big01.listeners.TabbedPaneChangeListen
 import com.javarush.test.level32.lesson15.big01.listeners.UndoListener;
 
 import javax.swing.*;
+import javax.swing.text.html.HTMLDocument;
 import javax.swing.undo.UndoManager;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -68,6 +69,10 @@ public class View extends JFrame implements ActionListener {
         pack();
     }
 
+    public boolean isHtmlTabSelected(){
+        return tabbedPane.getSelectedIndex() == 0;
+    }
+
     public void setController(Controller controller) {
         this.controller = controller;
     }
@@ -115,10 +120,50 @@ public class View extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        String command = e.getActionCommand();
+        switch (command) {
+            case "Новый":
+                controller.createNewDocument();
+                break;
+            case "Открыть":
+                controller.openDocument();
+                break;
+            case "Сохранить":
+                controller.saveDocument();
+                break;
+            case "Сохранить как...":
+                controller.saveDocumentAs();
+                break;
+            case "Выход":
+                controller.exit();
+                break;
+            case "О программе":
+                showAbout();
+                break;
+        }
     }
 
     public void selectedTabChanged(){
+        int index = tabbedPane.getSelectedIndex();
+        if(index == 0){
+            controller.setPlainText(plainTextPane.getText());
+        }else if(index == 1){
+            plainTextPane.setText(controller.getPlainText());
+        }
+        this.resetUndo();
+    }
 
+    public void selectHtmlTab(){
+        tabbedPane.setSelectedIndex(0);
+        resetUndo();
+    }
+
+    public void update(){
+        HTMLDocument document = controller.getDocument();
+        htmlTextPane.setDocument(document);
+    }
+
+    public void showAbout(){
+        JOptionPane.showMessageDialog(this,"This is LeoEditor. All rights reserved, 2016","Message",JOptionPane.INFORMATION_MESSAGE);
     }
 }
